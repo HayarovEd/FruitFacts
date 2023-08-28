@@ -10,14 +10,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import facts.fruit.R
 import facts.fruit.ui.theme.background
 import facts.fruit.ui.theme.text
@@ -26,8 +30,10 @@ import facts.fruit.ui.theme.titleText
 
 @Composable
 fun Content(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel  = hiltViewModel()
 ) {
+    val state = viewModel.state.collectAsState()
     Column(
         modifier
             .fillMaxSize()
@@ -46,16 +52,32 @@ fun Content(
         Image(
             modifier = modifier.fillMaxWidth(),
             painter = painterResource(
-                id = R.drawable.fruits
+                id = state.value.fruit.image
             ),
             contentDescription = ""
         )
         Spacer(modifier = modifier.height(8.dp))
         Text(
             modifier = modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.fruit_facts_1_25_content),
+            text = state.value.fruit.content,
             fontSize = 16.sp,
             color = text
         )
+        Spacer(modifier = modifier.height(8.dp))
+        Button(
+            modifier = modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = titleText,
+                contentColor = text
+            ),
+            onClick = {
+                viewModel.nextFact()
+            }) {
+            Text(
+                text = stringResource(id = R.string.next_fact),
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
