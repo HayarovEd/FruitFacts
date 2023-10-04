@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class KeeperImpl @Inject constructor(
     application: Application
-): Keeper.Keeper {
+): Keeper {
     private val sharedPref =
         application.getSharedPreferences(SAVED_SETTINGS, Context.MODE_PRIVATE)
 
