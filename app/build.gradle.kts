@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "facts.fruit"
+    namespace = "com.facts.fruit.tuti"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "facts.fruit"
+        applicationId = "com.facts.fruit.tuti"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
